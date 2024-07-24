@@ -1,8 +1,6 @@
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using DefaultNamespace;
-using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -15,6 +13,19 @@ public class GameController : MonoBehaviour
     
     [Tooltip("Size of the Enemy Party to generate")]
     public int EnemyPartySize;
+
+    [Tooltip("Min level Players")]
+    public int PlayerMinLevel;
+    
+    [Tooltip("Min level Enemies")]
+    public int EnemyMinLevel;
+    
+    [Tooltip("Max level Players")]
+    public int PlayerMaxLevel;
+    
+    [Tooltip("Max level Enemies")]
+    public int EnemyMaxLevel;
+
 
     /// <summary>
     /// How long has the battle sim run?
@@ -104,9 +115,13 @@ public class GameController : MonoBehaviour
     private void OnEnterState_Initialize()
     {
         // Create both new parties.
-        PlayerParty = new Party(PartySize, Factions.FactionEnum.Player);
-        EnemyParty = new Party(EnemyPartySize, Factions.FactionEnum.Enemy);
+        //PlayerParty = new Party(PartySize, Factions.FactionEnum.Player);
+        //EnemyParty = new Party(EnemyPartySize, Factions.FactionEnum.Enemy);
         
+        // create parties with level range
+        PlayerParty = new Party(PartySize, Factions.FactionEnum.Player, PlayerMinLevel, PlayerMaxLevel);
+        EnemyParty = new Party(EnemyPartySize, Factions.FactionEnum.Enemy, EnemyMinLevel, EnemyMaxLevel);
+
         UIController.ShowParty(PlayerParty);
         UIController.ShowParty(EnemyParty);
 
@@ -228,17 +243,32 @@ public class GameController : MonoBehaviour
         {
             case Factions.FactionEnum.Player:
             {
-                foreach (var agent in PlayerParty.Agents)
+                if (!PlayerParty.Agents.Any(agent => agent.Stats.HP >0))
                 {
-                    UpdateAgent(agent);
+                    // quick check to see if we don't have any alive players
+                    SetGameOver(Factions.FactionEnum.Enemy);
+                }
+                else
+                {
+                    foreach (var agent in PlayerParty.Agents)
+                    {
+                        UpdateAgent(agent);
+                    }
                 }
             }
                 break;
             case Factions.FactionEnum.Enemy:
-            {
-                foreach (var agent in EnemyParty.Agents)
+            { if (!EnemyParty.Agents.Any(agent => agent.Stats.HP >0))
                 {
-                    UpdateAgent(agent);
+                    // quick check to see if we don't have any alive players
+                    SetGameOver(Factions.FactionEnum.Player);
+                }
+                else
+                {
+                    foreach (var agent in EnemyParty.Agents)
+                    {
+                        UpdateAgent(agent);
+                    }
                 }
             }
                 break;
@@ -352,14 +382,28 @@ public class GameController : MonoBehaviour
     {
         // finalAgent couldn't find a target with > HP on its opponent team
         // Confirm this
-        switch (finalAgent.Faction)
+       SetGameOver(finalAgent.Faction);
+        
+        // no victory actually happened?
+        // This would be a weird edge case.
+    }
+
+    /// <summary>
+    /// Try and end the game
+    /// Set the victorious Faction to finalFaction
+    /// Checks to make sure we have 0 agents in opposing faction.
+    /// </summary>
+    /// <param name="finalFaction"></param>
+    public void SetGameOver(Factions.FactionEnum finalFaction)
+    {
+        switch (finalFaction)
         {
             case Factions.FactionEnum.Player:
             {
                 if (!EnemyParty.Agents.Any(agent => agent.Stats.HP > 0))
                 {
                     // no enemy has HP > 0, player wins!
-                    DeclareVictory(finalAgent.Faction);
+                    DeclareVictory(finalFaction);
                     return;
                 }
             } break;
@@ -368,14 +412,11 @@ public class GameController : MonoBehaviour
                 if (!PlayerParty.Agents.Any(agent => agent.Stats.HP > 0))
                 {
                     // no player has HP > 0, Enemy wins!
-                    DeclareVictory(finalAgent.Faction);
+                    DeclareVictory(finalFaction);
                     return;
                 }
             } break;
         }
-        
-        // no victory actually happened?
-        // This would be a weird edge case.
     }
 
     private Factions.FactionEnum VictoriousFaction;

@@ -44,8 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8ce15b7f71d94a59ae0f22037078011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PartySize: 1
-  EnemyPartySize: 1
+  PartySize: 4
+  EnemyPartySize: 4
+  PlayerMinLevel: 1
+  EnemyMinLevel: 0
+  PlayerMaxLevel: 1
+  EnemyMaxLevel: 11
   BattleTimer: 0
+  BaseActionTime: 0.01
+  BaseDamageTime: 1.05
   CurrentGameState: 0
   UIController: {fileID: 0}

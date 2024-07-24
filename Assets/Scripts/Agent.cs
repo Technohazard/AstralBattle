@@ -12,6 +12,10 @@ public class Agent
     // hold a reference here
     // so we can do stuff to it based on state.
     public AgentTileScript TileReference;
+
+    // what level is this?
+    // Determines stats on generation.
+    public int Level;
     
     public Agent()
     {
@@ -27,6 +31,14 @@ public class Agent
         SetName();
     }
     
+    public Agent(Factions.FactionEnum setFaction, int level)
+    {
+        Level = level;
+        Faction = setFaction;
+        Stats = new AgentStats(setFaction, Level);
+        SetName();
+    }
+    
     public void SetName()
     {
         string tempName = string.Empty;
@@ -38,7 +50,69 @@ public class Agent
             }  break;
             case Factions.FactionEnum.Enemy:
             {
-                tempName = "Bad Goblin";
+                switch (Level)
+                {
+                    case 0:
+                    {
+                        tempName = "Bad Goblin";
+                        break;
+                    }
+                    case 1:
+                    {
+                        tempName = "Skeleton";
+                        break;
+                    }
+                    case 2 :
+                    {
+                        tempName = "Slime";
+                        break;
+                    }
+                    case 3 :
+                    {
+                        tempName = "Kobold";
+                        break;
+                    }
+                    case 4 :
+                    {
+                        tempName = "Strong Goblin";
+                        break;
+                    }
+                    case 5:
+                    {
+                        tempName = "Carnivore Vine";
+                        break;
+                    }
+                    case > 5 and < 10:
+                    {
+                        tempName = "Therion";
+                        break;
+                    }
+                    case >= 10 and < 80:
+                    {
+                        tempName = "Foot Soldier";
+                        break;
+                    }
+                    case > 80 and < 90:
+                    {
+                        tempName = "Wyrm";
+                        break;
+                    }
+                    case >= 90 and < 96:
+                    {
+                        tempName = "Demon";
+                        break;
+                    }
+                    case >= 96 and <= 99:
+                    {
+                        tempName = "Demon Lord";
+                        break;
+                    }
+                    case > 99:
+                    {
+                        tempName = "Devil King";
+                        break;
+                    }
+                }
             } break;
         }
         DisplayName = tempName;
@@ -113,7 +187,6 @@ public class Agent
         else
         {
             Debug.Log($"{DisplayName}: blocked { amount } damage. (DEF: { Stats.Defense })");
-
         }
     }
 

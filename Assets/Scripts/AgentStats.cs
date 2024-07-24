@@ -15,7 +15,7 @@ public class AgentStats
         Defense = 1;
         Speed = 1.0f;
     }
-    
+
     public AgentStats(Factions.FactionEnum faction)
     {
         switch (faction)
@@ -26,8 +26,9 @@ public class AgentStats
                 HP = Max_HP;
                 Attack = 1;
                 Defense = 1;
-                Speed = 1.0f; 
-            } break;
+                Speed = 1.0f;
+            }
+                break;
             case Factions.FactionEnum.Enemy:
             {
                 Max_HP = 2;
@@ -35,8 +36,33 @@ public class AgentStats
                 Attack = 1;
                 Defense = 0;
                 Speed = 1.0f;
-            } break;
+            }
+                break;
         }
+    }
 
+    public AgentStats(Factions.FactionEnum faction, int level)
+    {
+        switch (faction)
+        {
+            case Factions.FactionEnum.Player:
+            {
+                Max_HP = 1 + (level * 10);
+                HP = Max_HP;
+                Attack = 1 + level;
+                Defense = 1 + level;
+                Speed = 1.0f + (0.1f * level);
+            }
+                break;
+            case Factions.FactionEnum.Enemy:
+            {
+                Max_HP = 1 + (level * 10);
+                HP = Max_HP;
+                Attack = level;
+                Defense = level;
+                Speed = 1.0f + (0.1f * level);
+            }
+                break;
+        }
     }
 }
