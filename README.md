@@ -1,8 +1,16 @@
-# AstrobloxBattle
+# AstralBattle - War in the Heavens
 
-Welcome to the AstrobloxBattle Code Test:
+Author: Justin Smith
+email: technohazard@gmail.com
+twitter/x: [https://twitter.com/odd_dimensions](https://twitter.com/odd_dimensions)
+linkedIn: [https://www.linkedin.com/in/justinsmithgamedesign/](https://www.linkedin.com/in/justinsmithgamedesign/)
 
-Author: Justin Smith, technohazard@gmail.com
+Summary:
+This was originally a code test for a swell startup.
+I need to put some code samples on GitHub, this is a good start.
+
+Goals:
+Improve this, make it example-terrific.
 
 Setup:
 1. Load the Main game scene
@@ -18,27 +26,9 @@ All Agents spawn within their minimum to maximum level range.
 Minimum level is 0, maximum level is unlimited, but enemies only get unique names until level 100.
 You can click and drag the scroll windows to view your party member info - theoretically unlimited size.
 
-Development process
-1. Read thoroughly the take-home project description
-2. Break it down into key design documents.
-    1. A master TODO list of meta-tasks, like setting up the git repo, etc.  A copy of the project requrements with check boxes underneath each point and some reordering.
-    2. Development Master, for code and architecture notes A list of Systems needed to produce the minimum viable runtime, checkboxes.
-    3. Design Master for gameplay and UX elements Gameplay states, UI display choices
-3. Code, test, and iterate features on the list according to the document.
-4. Once I get to minimum viable gameplay loop, commit and push
-5. Finish the additional behaviors or bugs with incremental commits. 
-Design choices 
-Use Unity UI for 100% of the game display. 
-2D only!
-Feature Completion:
-Everything should be in the requirements except additional behaviors:
-DOT, HEAL, HOT, Buff, Debuff
-However, the system supports these actions fully, which should go in the next(?) updates.
-
-Time spent on each section
-Sunday: 1-2h reading design docs and planning, 1h code.
-Monday: 2h code initial systems and project setup/UI
-Weds: 2h Finish coding Damage system and core game loop
-+1h bug fix and polish
+Second Commit:
 - Added levels to monsters for some variety
 - Fixed bug where if no agents were alive to take an action the game would never quit.
+
+Future Commits:
+Not sure what sort of design direction to take with this, but for now I'll just improve things until it gets fun, or I get feedback.
